@@ -5,11 +5,11 @@ from sqlalchemy.orm import sessionmaker
 # Postgres-exempel, byt ut user/password/dbname
 SQLALCHEMY_DATABASE_URL = "postgresql://user:password@localhost:5432/workouts"
 
-# Skapa engine
+# kopplar python til databasen
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-# Skapa session-klass (som EntityManager i Java)
+# använder detta för att öppna databas sessioner i varje request
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Bas-klass för modeller
+# alla modeller (workout,exercise) ärver från denna
 Base = declarative_base()
