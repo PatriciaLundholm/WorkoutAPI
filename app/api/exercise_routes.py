@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter
 
-from app.api.WorkoutRoutes import service
+from app.api.workout_routes import service
 
 app = FastAPI()
 router = APIRouter()
