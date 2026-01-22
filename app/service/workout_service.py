@@ -28,4 +28,12 @@ class WorkoutService:
         db.refresh(db_workout)
         return db_workout
 
+    def get_workouts(self, db: Session) -> List[Workout]:
+        return db.query(Workout).order_by(Workout.date.desc()).all()
+
+    def get_workout(self, db: Session, id: int) -> Workout:
+        workout = db.query(Workout).filter(Workout.id == id).first()
+        if not workout:
+            raise ValueError("Workout not found")
+        return workout
 
