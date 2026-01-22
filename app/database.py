@@ -1,3 +1,4 @@
+# database.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
@@ -17,3 +18,9 @@ def get_db():
         yield db
     finally:
         db.close()
+
+# Lägg till detta om du vill skapa alla tabeller direkt
+def init_db():
+    from app.model.db.exercise_model import Exercise
+    from app.model.db.workout_model import Workout
+    Base.metadata.create_all(bind=engine)

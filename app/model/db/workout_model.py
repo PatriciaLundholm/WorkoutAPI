@@ -1,13 +1,12 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from app.database import Base
 
-#Denna klass motsvarar JPA entities
-
 class Workout(Base):
-    __tablename__ = 'workout'
+    __tablename__ = "workout"
 
     id = Column(Integer, primary_key=True)
-    date = Column(Date, nullable=False)
+    name = Column(String, nullable=False)
     exercises = relationship("Exercise", back_populates="workout")
+
 

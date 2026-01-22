@@ -1,16 +1,14 @@
+from typing import Optional
+
 from pydantic import BaseModel
-from typing import (List,Optional)
+
+class ExerciseCreate(BaseModel):
+    name: str
+    reps: int
+    weight: float
 
 
-class ExerciseCreate(BaseModel): #skapa övning
-    title: List[str]
-    description: List[str]
-    weight: Optional[float] = None
-    reps: Optional[int] = None
-    sets: Optional[int] = None
-
-
-class ExerciseRead(BaseModel): #GET för att se övningen
+class ExerciseRead(BaseModel):  # GET för att se övningen
     id: int
     name: str
     description: str
@@ -18,6 +16,5 @@ class ExerciseRead(BaseModel): #GET för att se övningen
     reps: Optional[int] = None
     sets: Optional[int] = None
 
-
-class Config:
-    orm_mode = True #så att SQLAlchemy objekt kan serialiseras
+    class Config:
+        orm_mode = True

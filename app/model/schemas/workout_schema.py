@@ -1,11 +1,13 @@
 from pydantic import BaseModel
 from datetime import date
-from typing import List
+from typing import List, Optional
 
 
-class WorkoutCreate(BaseModel): #används som en POST
-    date: date
-    exercises: List[str] #lista med övningsnamn som man själv anger
+from pydantic import BaseModel
+
+class WorkoutCreate(BaseModel):
+    name: str
+
 
 
 class WorkoutRead(BaseModel): #används som en GET
