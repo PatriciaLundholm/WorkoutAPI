@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.model.workout import WorkoutCreate
+from app.model.schemas.workout_schema import WorkoutCreate
 from app.service.workout_service import WorkoutService
 
 router = APIRouter()

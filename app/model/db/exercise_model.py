@@ -7,5 +7,5 @@ class Exercise(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    workout_id = Column(Integer, ForeignKey('workout.id'))
+    workout_id = Column(Integer, ForeignKey("workout.id"))
     workout = relationship("Workout", back_populates="exercises")
