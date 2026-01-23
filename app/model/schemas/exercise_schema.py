@@ -11,7 +11,7 @@ class ExerciseCreate(BaseModel):
 class ExerciseRead(BaseModel):  # GET för att se övningen
     id: int
     name: str
-    description: str
+    description: Optional[str] = None
     weight: Optional[float] = None
     reps: Optional[int] = None
     sets: Optional[int] = None

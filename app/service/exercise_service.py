@@ -26,7 +26,7 @@ class ExerciseService:
             raise ValueError("Workout not found")
 
         db_exercise = Exercise(
-            name=exercise.title,
+            name=exercise.name,
             reps=exercise.reps,
             weight=exercise.weight,
             workout_id=workout_id
