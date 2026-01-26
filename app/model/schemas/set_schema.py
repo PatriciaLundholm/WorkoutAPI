@@ -1,5 +1,5 @@
+
 from pydantic import BaseModel
-from datetime import datetime
 
 class SetCreate(BaseModel):
     reps: int
@@ -7,9 +7,9 @@ class SetCreate(BaseModel):
 
 class SetRead(BaseModel):
     id: int
-    reps:int
+    reps: int
     weight: float
-    created_at: datetime
 
     class Config:
-        from_attributes = True
+        orm_mode = True
+

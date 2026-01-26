@@ -5,6 +5,7 @@ from typing import List
 
 from app.database import get_db
 from app.model.schemas.exercise_schema import ExerciseCreate, ExerciseRead
+from app.model.schemas.set_schema import SetCreate
 from app.service.exercise_service import ExerciseService
 
 router = APIRouter()
@@ -35,7 +36,7 @@ def get_exercises(workout_id: int, db: Session = Depends(get_db)):
 @router.post("/exercise/{exercise_id}/sets")
 def set_exercise(
     exercise_id: int,
-    set_data: dict,
+    set_data: SetCreate,
     db: Session = Depends(get_db)
 ):
     return service.set_exercise(db, exercise_id, set_data)
