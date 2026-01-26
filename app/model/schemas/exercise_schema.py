@@ -19,6 +19,7 @@ class ExerciseRead(BaseModel):
     id: int
     name: str
     description: Optional[str] = None
+    sets_count: int
     sets: List[SetRead] = []
 
     class Config:

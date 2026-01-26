@@ -18,7 +18,14 @@ class ExerciseService:
         return new_exercise
 
     def get_exercises_for_workout(self, db: Session, workout_id: int):
-        return db.query(Exercise).filter(Exercise.workout_id == workout_id).all()
+        exercises = db.query(Exercise).filter(
+            Exercise.workout_id == workout_id
+        ).all()
+
+        for ex in exercises:
+            ex.sets_count = len(ex.sets)
+
+        return exercises
 
     def set_exercise(self, db: Session, exercise_id: int, set_data: SetCreate):
         exercise = db.query(Exercise).filter(Exercise.id == exercise_id).first()
