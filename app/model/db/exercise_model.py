@@ -13,3 +13,7 @@ class Exercise(Base):
 
     workout = relationship("Workout", back_populates="exercises")
     sets = relationship("Set", back_populates="exercise", cascade="all, delete-orphan")
+
+    @property
+    def sets_count(self) -> int:
+        return len(self.sets)

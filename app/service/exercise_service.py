@@ -3,6 +3,7 @@ from app.model.db.exercise_model import Exercise
 from app.model.db.set_model import Set
 from app.model.schemas.exercise_schema import ExerciseCreate
 from app.model.schemas.set_schema import SetCreate
+from sqlalchemy.orm import joinedload
 
 class ExerciseService:
 
@@ -18,13 +19,12 @@ class ExerciseService:
         return new_exercise
 
     def get_exercises_for_workout(self, db: Session, workout_id: int):
-        exercises = db.query(Exercise).filter(
-            Exercise.workout_id == workout_id
-        ).all()
-
-        for ex in exercises:
-            ex.sets_count = len(ex.sets)
-
+        exercises = (
+            db.query(Exercise)
+            .filter(Exercise.workout_id == workout_id)
+            .options(joinedload(Exercise.sets))
+            .all()
+        )
         return exercises
 
     def set_exercise(self, db: Session, exercise_id: int, set_data: SetCreate):

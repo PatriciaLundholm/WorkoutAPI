@@ -1,15 +1,6 @@
-
 from pydantic import BaseModel
 from typing import List, Optional
-from app.model.db.set_model import Set
-
-class SetRead(BaseModel):
-    id: int
-    reps: int
-    weight: float
-
-    class Config:
-        orm_mode = True
+from app.model.schemas.set_schema import SetRead
 
 class ExerciseCreate(BaseModel):
     name: str
@@ -24,4 +15,5 @@ class ExerciseRead(BaseModel):
 
     class Config:
         orm_mode = True
+
 
