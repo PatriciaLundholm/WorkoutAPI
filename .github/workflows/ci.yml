@@ -35,7 +35,7 @@ jobs:
         run: curl -v http://localhost:8000 || true
 
       - name: Test API
-        run: curl --fail http://localhost:8000/   # byt till /health eller vad som returnerar 200
+        run: curl --fail http://localhost:8000/api/workouts   # eller /api/exercises – välj ett som GET:ar utan parametrar
 
       - name: Stop container
         if: always()
