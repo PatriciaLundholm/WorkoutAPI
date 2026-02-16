@@ -55,13 +55,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest
+          pip install pytest httpx
           pytest tests
 
       # 8️⃣ Testa API endpoint
       - name: Test API endpoint
         run: curl --fail http://localhost:8000/api/workouts
-      
+
 
       # 8️⃣ Stoppa testcontainer
       - name: Stop container
