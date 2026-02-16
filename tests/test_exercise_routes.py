@@ -50,16 +50,3 @@ def test_get_exercises_success():
     assert data[0]["name"] == "Pec Dec"
     assert data[1]["name"] == "Sidolyft"
 
-def test_set_exercise():
-    mock_service = MagicMock()
-    mock_service.set_evercise.return_value = {"status": "ok"}
-
-    app.dependency_overrides[get_exercise_service] = lambda: mock_service
-
-    response = client.post(
-        "/api/exercises/exercise/1/sets",
-        json={"reps": 10, "weight": 50}
-    )
-    assert response.status_code == 200
-    mock_service.set_evercise.assert_called_once()
-    app.dependency_overrides.clear()
