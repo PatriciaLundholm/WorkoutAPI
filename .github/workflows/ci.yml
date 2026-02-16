@@ -25,7 +25,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # 3️⃣ Bygg Docker-image
+      # 3️⃣ Bygg Docker image
       - name: Build Docker image
         run: docker build -t workoutapi .
 
