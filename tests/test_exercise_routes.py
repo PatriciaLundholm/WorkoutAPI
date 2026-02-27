@@ -3,23 +3,25 @@ from fastapi.testclient import TestClient
 from unittest.mock import MagicMock
 from app.main import app
 from app.api.exercise_routes import get_exercise_service
-from app.model.db.exercise_model import Exercise
+from app.model.schemas.exercise_schema import ExerciseRead, ExerciseCreate
+from app.model.schemas.set_schema import SetRead
 
-
+# Mock service som returnerar Pydantic-liknande objekt
 def mock_exercise_service():
     mock = MagicMock()
-    # Returnera två exercises när man hämtar exercises för ett pass
+
     mock.get_exercises_for_workout.return_value = [
-        Exercise(id=1, name="Pec Dec", description="Maskin"),
-        Exercise(id=2, name="Sidolyft", description="Hantlar"),
+        ExerciseRead(id=1, name="Pec Dec", description="Maskin", sets_count=0, sets=[]),
+        ExerciseRead(id=2, name="Sidolyft", description="Hantlar", sets_count=0, sets=[]),
     ]
-    # Returnera en exercise när man skapar en ny
-    mock.create_exercise.return_value = Exercise(id=1, name="Pec Dec", description=None)
+    # Returnera en exercise när man skapar
+    mock.create_exercise.return_value = ExerciseRead(
+        id=1, name="Pec Dec", description=None, sets_count=0, sets=[]
+    )
     return mock
 
 # Override dependency
 app.dependency_overrides[get_exercise_service] = mock_exercise_service
-
 client = TestClient(app)
 
 def test_create_exercise_success():
@@ -33,7 +35,7 @@ def test_create_exercise_success():
     assert data["id"] == 1
 
 def test_create_exercise_not_found():
-    # Mock som kastar ValueError
+
     mock_service = MagicMock()
     mock_service.create_exercise.side_effect = ValueError("Workout Not Found")
     app.dependency_overrides[get_exercise_service] = lambda: mock_service
@@ -45,7 +47,7 @@ def test_create_exercise_not_found():
     assert response.status_code == 404
     assert response.json() == {"detail": "Workout Not Found"}
 
-
+    # Återställ mock
     app.dependency_overrides[get_exercise_service] = mock_exercise_service
 
 def test_get_exercises_success():
