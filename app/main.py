@@ -6,7 +6,11 @@ from app.database import init_db
 from app.model.db.workout_model import Workout
 from app.model.db.exercise_model import Exercise
 
-app = FastAPI()
+app = FastAPI(
+    title="Workout API",
+    description="API för träningspass och övningar",
+    version="0.1.0"
+)
 
 # Skapa tabeller
 Base.metadata.create_all(bind=engine)

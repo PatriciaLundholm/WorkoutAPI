@@ -8,7 +8,7 @@ from app.model.schemas.exercise_schema import ExerciseCreate, ExerciseRead
 
 def test_root_exists():
     response = client.get("/")
-    print(response.status_code)          
+    print(response.status_code)
     print(response.text[:200])
 
     response = client.get("/docs")

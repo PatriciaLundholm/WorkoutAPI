@@ -7,19 +7,29 @@ from app.model.schemas.workout_schema import WorkoutCreate, WorkoutRead
 from app.service.workout_service import WorkoutService
 
 router = APIRouter()
-service = WorkoutService()
 
+def get_workout_service():
+    return WorkoutService()
 
 @router.post("/", response_model=WorkoutRead)
-def create_workout(workout: WorkoutCreate, db: Session = Depends(get_db)):
+def create_workout(
+    workout: WorkoutCreate,
+    service: WorkoutService = Depends(get_workout_service),
+    db: Session = Depends(get_db),
+):
     return service.create_workout(db, workout)
 
-
 @router.get("/", response_model=List[WorkoutRead])
-def get_workouts(db: Session = Depends(get_db)):
+def get_workouts(
+    service: WorkoutService = Depends(get_workout_service),
+    db: Session = Depends(get_db),
+):
     return service.get_workouts(db)
 
-
 @router.get("/{id}", response_model=WorkoutRead)
-def get_workout(id: int, db: Session = Depends(get_db)):
+def get_workout(
+    id: int,
+    service: WorkoutService = Depends(get_workout_service),
+    db: Session = Depends(get_db),
+):
     return service.get_workout(db, id)

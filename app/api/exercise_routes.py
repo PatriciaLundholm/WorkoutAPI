@@ -8,7 +8,6 @@ from app.model.schemas.set_schema import SetCreate, SetRead
 from app.service.exercise_service import ExerciseService
 
 router = APIRouter()
-service = ExerciseService()
 
 def get_exercise_service():
     return ExerciseService()
@@ -17,20 +16,24 @@ def get_exercise_service():
 def create_exercise(
     workout_id: int,
     exercise: ExerciseCreate,
+    service: ExerciseService = Depends(get_exercise_service),
     db: Session = Depends(get_db),
 ):
     return service.create_exercise(db, workout_id, exercise)
 
-
 @router.get("/workout/{workout_id}/exercise", response_model=List[ExerciseRead])
-def get_exercises(workout_id: int, db: Session = Depends(get_db)):
+def get_exercises(
+    workout_id: int,
+    service: ExerciseService = Depends(get_exercise_service),
+    db: Session = Depends(get_db),
+):
     return service.get_exercises_for_workout(db, workout_id)
-
 
 @router.post("/exercise/{exercise_id}/sets", response_model=SetRead)
 def add_set(
     exercise_id: int,
     set_data: SetCreate,
+    service: ExerciseService = Depends(get_exercise_service),
     db: Session = Depends(get_db),
 ):
     try:
