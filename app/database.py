@@ -23,4 +23,3 @@ def init_db():
     from app.model.db.set_model import Set
 
     Base.metadata.create_all(bind=engine)
-

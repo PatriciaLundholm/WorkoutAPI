@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout koden
+
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Installera Python och dependencies
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -25,15 +25,15 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      #  Bygg Docker image
+
       - name: Build Docker image
         run: docker build -t workoutapi .
 
-      #  Kör container för tester
+
       - name: Run container for tests
         run: docker run -d -p 8000:8000 --name testcontainer workoutapi
 
-      #  Vänta på att API:et startar
+
       - name: Wait for API
         run: |
           for i in {1..20}; do
@@ -45,12 +45,12 @@ jobs:
             sleep 2
           done
 
-      #  Debug response (om något går fel)
+
       - name: Debug response
         if: always()
         run: curl -v http://localhost:8000 || true
 
-      #  Kör Python-tester
+
       - name: Run Python tests
         run: |
           python -m pip install --upgrade pip
@@ -58,30 +58,30 @@ jobs:
           pip install pytest httpx
           pytest tests
 
-      # Testa API endpoint
+
       - name: Test API endpoint
         run: curl --fail http://localhost:8000/api/workouts
 
 
-      #  Stoppa testcontainer
+
       - name: Stop container
         if: always()
         run: docker stop testcontainer
 
-      # 9️⃣ Logga in på Docker Hub (använder secrets korrekt)
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 🔟 Tagga Docker-image
+
       - name: Tag Docker image
         run: |
           docker tag workoutapi patricialundholm1/workoutapi:latest
           docker tag workoutapi patricialundholm1/workoutapi:${{ github.sha }}
 
-      # 1️⃣1️⃣ Push Docker-image till Docker Hub
+
       - name: Push Docker image
         run: |
           docker push patricialundholm1/workoutapi:latest

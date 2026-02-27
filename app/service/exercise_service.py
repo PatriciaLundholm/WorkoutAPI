@@ -39,4 +39,3 @@ class ExerciseService:
 
     def get_sets(self, db: Session):
         return db.query(Set).all()
-

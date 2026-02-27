@@ -1,19 +1,17 @@
 from pydantic import BaseModel
-from datetime import date
-from typing import List, Optional
+from typing import List
+from app.model.schemas.exercise_schema import ExerciseRead
 
-
-from pydantic import BaseModel
 
 class WorkoutCreate(BaseModel):
     name: str
 
 
+class WorkoutRead(BaseModel):
+    id: int
+    name: str
+    exercises: List[ExerciseRead] = []
 
-class WorkoutRead(BaseModel): #används som en GET
-    id : int
-    date: date
-    exercises: List[str]
-
-class Config:
-    orm_mode = True #viktigt för SQL
+    model_config = {
+        "from_attributes": True
+    }

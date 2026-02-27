@@ -25,4 +25,3 @@ class WorkoutService:
             raise ValueError("Workout not found")
         return workout
 
-
