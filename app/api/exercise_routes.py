@@ -10,6 +10,8 @@ from app.service.exercise_service import ExerciseService
 router = APIRouter()
 service = ExerciseService()
 
+def get_exercise_service():
+    return ExerciseService()
 
 @router.post("/workout/{workout_id}/exercise", response_model=ExerciseRead)
 def create_exercise(
